@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 from datetime import timedelta
+import os
 
 
 db = SQLAlchemy()
@@ -16,7 +17,8 @@ def createApp():
     app = Flask(__name__)
     
     #this url must be change / local path where the sqlite database is located must be made.
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/ahmet/OneDrive/Masaüstü/Kodlama Projeleri/Software Engineering/group8/test.db'
+    dsn = os.getenv("DATABASE_URL")
+    app.config['SQLALCHEMY_DATABASE_URI'] = dsn
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = 'ILC secret key' 
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
